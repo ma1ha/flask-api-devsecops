@@ -10,7 +10,7 @@ pipeline {
             steps { 
               git branch: 'main', 
               credentialsId: 'github-credentials', 
-              url: "https://github.com/ma1ha/flask-api.git"
+              url: "https://github.com/ma1ha/flask-api-devsecops.git"
             }
         }
 
