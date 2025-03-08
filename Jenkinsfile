@@ -1,5 +1,5 @@
 pipeline{
-    agnet any 
+    agent any 
     enviroment{
         IMAGE_NAME="maha997/flask-api"
 
