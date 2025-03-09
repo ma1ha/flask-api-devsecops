@@ -19,7 +19,7 @@ pipeline {
                 sh 'docker build -t $IMAGE_NAME .'
             }
         }
-
+/*
         stage('Push to Docker Hub') {
             steps {
                 withDockerRegistry([credentialsId: 'docker-hub-credentials', url: '']) {
@@ -32,6 +32,11 @@ pipeline {
             steps {
                 sh 'kubectl apply -f k8s/deployment.yaml'
             }
-        }
+        }*/
+         stage('Docker Build') {
+      agent any
+      steps {
+        sh 'docker build $IMAGE_NAME .'
+      }
     }
 }
