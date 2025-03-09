@@ -31,7 +31,10 @@ pipeline {
 
         stage('Deploy to Kubernetes') {
             steps {
-                sh "kubectl apply -f k8s/deployment.yaml"
+                sh '''
+                export KUBECONFIG=/root/.kube/config
+                kubectl apply -f k8s/deployment.yaml
+                '''
             }
         }
     }
