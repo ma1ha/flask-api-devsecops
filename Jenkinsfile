@@ -17,24 +17,22 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t ${IMAGE_TAG} .'
+                sh "docker build -t ${IMAGE_TAG} ."  // Proper string interpolation
             }
         }
 
-       
         stage('Push to Docker Hub') {
-            steps {steps {
+            steps {
                 withDockerRegistry([credentialsId: 'docker-hub-credentials', url: 'https://index.docker.io/v1/']) {
-                    sh "docker push ${IMAGE_TAG}"  // Push the tagged image
+                    sh "docker push ${IMAGE_TAG}"
                 }
             }
         }
- 
+
         stage('Deploy to Kubernetes') {
             steps {
-                sh 'kubectl apply -f k8s/deployment.yaml'
+                sh "kubectl apply -f k8s/deployment.yaml"
             }
         }
-       
     }
-}
+} 
