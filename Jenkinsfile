@@ -32,8 +32,14 @@ pipeline {
         stage('Deploy to Kubernetes') {
             steps {
                 sh '''
-                export KUBECONFIG=/root/.kube/config
-                kubectl apply -f k8s/deployment.yaml
+                withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')]) {
+                    
+                    export PATH=${KUBECTL_PATH}:$PATH
+                    kubectl version --client
+                    kubectl cluster-info
+                    kubectl get nodes
+                    kubectl apply -f k8s/pingpong.yaml
+
                 '''
             }
         }
