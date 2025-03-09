@@ -3,6 +3,7 @@ pipeline {
 
     environment {
         IMAGE_NAME = "maha997/flask-api"
+        IMAGE_TAG = "${IMAGE_NAME}:${BUILD_NUMBER}" 
     }
 
     stages {
@@ -16,24 +17,24 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t $IMAGE_NAME .'
+                sh 'docker build -t ${IMAGE_TAG} .'
             }
         }
 
-        /*
+       
         stage('Push to Docker Hub') {
-            steps {
-                withDockerRegistry([credentialsId: 'docker-hub-credentials', url: '']) {
-                    sh 'docker push $IMAGE_NAME'
+            steps {steps {
+                withDockerRegistry([credentialsId: 'docker-hub-credentials', url: 'https://index.docker.io/v1/']) {
+                    sh "docker push ${IMAGE_TAG}"  // Push the tagged image
                 }
             }
         }
-
+ 
         stage('Deploy to Kubernetes') {
             steps {
                 sh 'kubectl apply -f k8s/deployment.yaml'
             }
         }
-        */
+       
     }
 }
